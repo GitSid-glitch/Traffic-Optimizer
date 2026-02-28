@@ -1,18 +1,38 @@
-from app.utils.geo import decode_route_polyline, compute_total_distance
+import polyline
 class RouteSimulator:
+
     def __init__(self, route):
         self.route = route
-        self.points = decode_route_polyline(route)
+        self.total_duration = route["traffic_duration"]
+        self.coordinates = polyline.decode(route["polyline"])
+
+        self.total_points = len(self.coordinates)
         self.current_index = 0
 
-        self.total_distance = compute_total_distance(self.points)
+    def advance(self, seconds):
+        progress_fraction = seconds / self.total_duration
+        steps_to_move = int(progress_fraction * self.total_points)
+
+        self.current_index += steps_to_move
+
+        if self.current_index >= self.total_points:
+            self.current_index = self.total_points - 1
+
     def get_current_position(self):
-        return self.points[self.current_index]
-    def move_forward(self, step=5):
-        self.current_index = min(self.current_index + step, len(self.points) - 1)
+        return self.coordinates[self.current_index]
+
     def get_remaining_distance_fraction(self):
-        remaining_points = self.points[self.current_index:]
-        remaining_distance = compute_total_distance(remaining_points)
-        return remaining_distance / self.total_distance
+        return max(
+            0,
+            (self.total_points - self.current_index) / self.total_points
+        )
+
     def is_finished(self):
-        return self.current_index >= len(self.points) - 1
+        return self.current_index >= self.total_points - 1
+
+    def update_route(self, new_route):
+        self.route = new_route
+        self.total_duration = new_route["traffic_duration"]
+        self.coordinates = polyline.decode(new_route["polyline"])
+        self.total_points = len(self.coordinates)
+        self.current_index = 0
