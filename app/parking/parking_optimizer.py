@@ -26,7 +26,6 @@ def compute_parking_score(origin, destination, parking_spot):
         "route": best_route
     }
 
-
 def choose_best_parking(origin, destination, parking_spots):
     best_option = None
     best_score = float("inf")
@@ -35,6 +34,6 @@ def choose_best_parking(origin, destination, parking_spots):
         if not result:
             continue
         if result["total_score"] < best_score:
-            best_score = result
+            best_score = result["total_score"]
             best_option = result
     return best_option
