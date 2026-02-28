@@ -9,3 +9,7 @@ __pycache__/
 *.log
 .streamlit/
 test_osrm.py
+services/osrm_service.py
+test_google.py
+test_reroute.py
+test_planner.py
