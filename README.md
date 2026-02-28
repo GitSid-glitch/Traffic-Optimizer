@@ -2,7 +2,7 @@
 
 An intelligent traffic-aware route optimization system that predicts
 congestion and dynamically selects the most efficient route using
-OpenStreetMap (OSRM) with a customizable optimization layer.
+Google Maps Api with a customizable optimization layer.
 
 ------------------------------------------------------------------------
 
@@ -82,7 +82,7 @@ We ask:
 
 ## Key Features
 
--   OSRM-based routing engine
+-   Google Maps-based routing engine
 -   Alternative route generation
 -   Time-of-day traffic simulation
 -   Dynamic cost-based route optimization
@@ -95,13 +95,13 @@ We ask:
 
 ## High-Level Flow
 
-User → Streamlit Frontend → Planner → OSRM → Traffic Simulator →
+User → Streamlit Frontend → Planner → Google API → Traffic Simulator →
 Optimizer → Response
 
 ## Architecture Description
 
 1.  User inputs origin and destination.
-2.  Backend queries OSRM for alternative routes.
+2.  Backend queries Google Api for alternative routes.
 3.  Traffic simulation layer applies time-based congestion multipliers.
 4.  Optimizer selects route with minimum predicted travel time.
 5.  Selected route is returned and visualized.
@@ -178,11 +178,7 @@ erDiagram
 
 ## Dataset Name
 
-OpenStreetMap (OSM)
-
-## Source
-
-https://www.openstreetmap.org
+Google Maps Api
 
 ## Data Type
 
@@ -190,10 +186,10 @@ Geospatial road network data
 
 ## Selection Reason
 
--   Open-source
+-   Trial Version available
 -   Highly detailed
 -   Globally available
--   Compatible with OSRM
+-   Highly accurate
 
 ------------------------------------------------------------------------
 
@@ -222,7 +218,7 @@ Travel Time Regression Model
 ## Backend
 
 -   Python
--   OSRM
+-   Google Api
 
 ## ML/AI (Future)
 
@@ -231,7 +227,6 @@ Travel Time Regression Model
 
 ## Deployment
 
--   Docker
 -   Streamlit Cloud / Cloud Platforms
 
 ------------------------------------------------------------------------
