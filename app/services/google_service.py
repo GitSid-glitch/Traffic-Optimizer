@@ -3,8 +3,21 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
-
 DIRECTIONS_URL = "https://maps.googleapis.com/maps/api/directions/json"
+GEOCODE_URL = "https://maps.googleapis.com/maps/api/geocode/json"
+
+def geocode_place(place_name):
+    params = {
+        "address": place_name,
+        "key": API_KEY
+    }
+    response = requests.get(GEOCODE_URL, params=params)
+    data = response.json()
+    if data["status"] != "OK":
+        return None
+    location = data["results"][0]["geometry"]["location"]
+    return (location["lat"], location["lng"])
+
 def get_routes(origin, destination):
     params = {
         "origin": f"{origin[0]},{origin[1]}",

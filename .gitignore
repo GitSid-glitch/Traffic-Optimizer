@@ -14,3 +14,5 @@ test_google.py
 test_reroute.py
 test_planner.py
 test_dynamic_real.py
+test_parking.py
+test_full_simulation.py
