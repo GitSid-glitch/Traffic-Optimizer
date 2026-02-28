@@ -1,17 +1,12 @@
-import random
-from datetime import datetime
-def get_time_multiplier():
-    hour = datetime.now().hour
-    if 8 <= hour <= 10:
-        return random.uniform(1.4, 1.8)
-    elif 17 <= hour <= 20:
-        return random.uniform(1.5, 2.0)
-    elif 12 <= hour <= 14:
-        return random.uniform(1.2, 1.4)
-    else:
-        return random.uniform(0.9, 1.1)
-def apply_traffic(route):
-    base_time = route["duration"]
-    multiplier = get_time_multiplier()
-    predicted_time = base_time * multiplier
-    return predicted_time
+from app.utils.geo import decode_route_polyline
+class RouteSimulator:
+    def __init__(self, route):
+        self.route = route
+        self.points = decode_route_polyline(route)
+        self.current_index = 0
+    def get_current_position(self):
+        return self.points[self.current_index]
+    def move_forward(self, step=5):
+        self.current_index = min(self.current_index + step, len(self.points) - 1)
+    def is_finished(self):
+        return self.current_index >= len(self.points) - 1
